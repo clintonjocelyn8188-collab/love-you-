@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>For Winnie ❤️</title>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+    font-family:Georgia,serif;
+    background:#05030b;
+    color:white;
+}
+
+/* =========================
+   SCREENS
+========================= */
+
+.screen{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    transition:1.5s ease;
+}
+
+.hidden{
+    opacity:0;
+    pointer-events:none;
+}
+
+/* =========================
+   STAR SKY
+========================= */
+
+#intro{
+    background:
+      radial-gradient(circle at 50% 45%,
+      #46152f 0%,
+      #16091c 45%,
+      #030207 100%);
+}
+
+.star{
+    position:fixed;
+    width:2px;
+    height:2px;
+    background:white;
+    border-radius:50%;
+    animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{opacity:.2;transform:scale(.7)}
+    to{opacity:1;transform:scale(1.5)}
+}
+
+.intro-small{
+    font-size:14px;
+    letter-spacing:4px;
+    opacity:.7;
+    animation:fadeIn 3s;
+}
+
+.intro-title{
+    margin:15px 0;
+    font-size:clamp(40px,11vw,75px);
+    font-style:italic;
+    font-weight:normal;
+    text-shadow:
+      0 0 15px #ff5b98,
+      0 0 40px #ff377e;
+    animation:titleAppear 3s ease;
+}
+
+.intro-sub{
+    max-width:330px;
+    line-height:1.7;
+    font-size:15px;
+    opacity:.8;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.start{
+    margin-top:35px;
+    padding:14px 28px;
+    border:1px solid rgba(255,255,255,.5);
+    border-radius:30px;
+    background:rgba(255,255,255,.08);
+    color:white;
+    font-size:14px;
+    letter-spacing:2px;
+    cursor:pointer;
+    backdrop-filter:blur(10px);
+    transition:.4s;
+}
+
+.start:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 30px #ff4c8b;
+}
+
+/* =========================
+   ENVELOPE SCREEN
+========================= */
+
+#envelopeScreen{
+    background:
+      radial-gradient(circle at center,
+      #591638,
+      #180817 55%,
+      #050308);
+}
+
+.story{
+    position:absolute;
+    top:8%;
+    font-size:13px;
+    letter-spacing:3px;
+    opacity:.7;
+}
+
+.envelope{
+    position:relative;
+    width:min(88vw,480px);
+    height:320px;
+    perspective:1400px;
+    cursor:pointer;
+}
+
+/* Letter */
+
+.letter{
+    position:absolute;
+    width:88%;
+    height:285px;
+    left:6%;
+    bottom:8%;
+    background:linear-gradient(135deg,#fffafa,#ffe7ef);
+    color:#631b3b;
+    border-radius:6px;
+    padding:28px 22px;
+    z-index:2;
+    opacity:0;
+    transform:
+      translateY(100px)
+      translateZ(-20px);
+    transition:
+      1.8s cubic-bezier(.15,.8,.2,1);
+    box-shadow:0 15px 35px rgba(0,0,0,.45);
+}
+
+.letter h2{
+    margin:0 0 15px;
+    font-style:italic;
+    font-size:28px;
+}
+
+#typed{
+    font-size:14px;
+    line-height:1.65;
+}
+
+/* Envelope body */
+
+.body{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:75%;
+    border-radius:8px;
+    background:linear-gradient(145deg,#e65c86,#851e48);
+    z-index:5;
+}
+
+/* Flap */
+
+.flap{
+    position:absolute;
+    top:0;
+    width:100%;
+    height:58%;
+    background:linear-gradient(145deg,#f4779d,#a42959);
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top center;
+    transition:1.4s cubic-bezier(.2,.8,.2,1);
+    z-index:8;
+}
+
+/* Seal */
+
+.seal{
+    position:absolute;
+    left:50%;
+    bottom:20px;
+    transform:translateX(-50%);
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:radial-gradient(circle,#ff628d,#78143b);
+    border:3px solid #ffc2d4;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+    z-index:15;
+    box-shadow:0 0 30px #ff3e83;
+    transition:1s;
+}
+
+/* OPEN */
+
+.envelope.open .flap{
+    transform:rotateX(180deg);
+    z-index:1;
+}
+
+.envelope.open .letter{
+    transform:
+      translateY(-125px)
+      translateZ(50px);
+    opacity:1;
+    z-index:7;
+}
+
+.envelope.open .seal{
+    opacity:0;
+    transform:
+      translateX(-50%)
+      scale(1.6);
+}
+
+.tap{
+    position:absolute;
+    bottom:7%;
+    font-size:13px;
+    letter-spacing:2px;
+    opacity:.7;
+    animation:pulse 2s infinite;
+}
+
+/* =========================
+   PHOTO SCREEN
+========================= */
+
+#photoScreen{
+    background:
+      radial-gradient(circle,
+      #5c183a,
+      #180817 60%,
+      #040207);
+}
+
+.photo-frame{
+    width:min(82vw,360px);
+    padding:12px;
+    background:#fff;
+    box-shadow:
+      0 0 50px rgba(255,75,140,.5);
+    transform:scale(.7) rotate(-2deg);
+    opacity:0;
+    transition:1.5s;
+}
+
+.photo-frame img{
+    width:100%;
+    display:block;
+}
+
+#photoScreen.show .photo-frame{
+    opacity:1;
+    transform:scale(1) rotate(-2deg);
+}
+
+.photo-caption{
+    margin-top:22px;
+    font-size:22px;
+    font-style:italic;
+}
+
+/* =========================
+   FINAL
+========================= */
+
+#final{
+    background:
+      radial-gradient(circle,
+      #6e1743,
+      #25091e 45%,
+      #050207);
+}
+
+.big-heart{
+    font-size:clamp(120px,35vw,260px);
+    animation:heartBeat 1.2s infinite alternate;
+    filter:
+      drop-shadow(0 0 20px #ff3f82)
+      drop-shadow(0 0 70px #ff3f82);
+}
+
+.final-title{
+    font-size:clamp(32px,8vw,55px);
+    font-style:italic;
+    margin-top:15px;
+    text-shadow:0 0 25px #ff5c98;
+}
+
+.final-text{
+    width:85%;
+    max-width:500px;
+    line-height:1.8;
+    font-size:15px;
+    opacity:.85;
+}
+
+/* =========================
+   PETALS / HEARTS
+========================= */
+
+.petal,.heart,.spark{
+    position:fixed;
+    pointer-events:none;
+    z-index:100;
+}
+
+.petal{
+    top:-30px;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:
+          translateY(110vh)
+          translateX(100px)
+          rotate(720deg);
+        opacity:0;
+    }
+}
+
+.heart{
+    bottom:-30px;
+    animation:rise linear forwards;
+    filter:drop-shadow(0 0 8px #ff4f91);
+}
+
+@keyframes rise{
+    0%{
+        transform:translateY(0) scale(.5);
+        opacity:0;
+    }
+    20%{opacity:1}
+    100%{
+        transform:translateY(-110vh) scale(1.5);
+        opacity:0;
+    }
+}
+
+.spark{
+    animation:sparkle 1.5s forwards;
+}
+
+@keyframes sparkle{
+    from{
+        transform:scale(0);
+        opacity:1;
+    }
+    to{
+        transform:scale(2) rotate(180deg);
+        opacity:0;
+    }
+}
+
+@keyframes heartBeat{
+    from{transform:scale(1)}
+    to{transform:scale(1.12)}
+}
+
+@keyframes pulse{
+    50%{opacity:.25}
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:.7}
+}
+
+@keyframes titleAppear{
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================
+   MUSIC
+========================= */
+
+.music{
+    position:fixed;
+    right:18px;
+    top:18px;
+    z-index:200;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.4);
+    background:rgba(255,255,255,.1);
+    color:white;
+    cursor:pointer;
+    backdrop-filter:blur(10px);
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+    <source src="love-song.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music" id="musicBtn">🎵</button>
+
+
+<!-- =========================
+     INTRO
+========================= -->
+
+<section class="screen" id="intro">
+
+    <div class="intro-small">
+        SOMEWHERE BETWEEN A DREAM
+    </div>
+
+    <h1 class="intro-title">
+        For My Winnie ❤️
+    </h1>
+
+    <div class="intro-sub">
+        There are some words that are
+        too special to simply send as a text...
+    </div>
+
+    <button class="start" id="start">
+        ✨ Begin Our Little Story ✨
+    </button>
+
+</section>
+
+
+<!-- =========================
+     ENVELOPE
+========================= -->
+
+<section class="screen hidden" id="envelopeScreen">
+
+    <div class="story">
+        A LITTLE MESSAGE FROM MY HEART
+    </div>
+
+    <div class="envelope" id="envelope">
+
+        <div class="letter">
+
+            <h2>My Winnie 🌷</h2>
+
+            <div id="typed"></div>
+
+        </div>
+
+        <div class="body"></div>
+
+        <div class="flap"></div>
+
+        <div class="seal">
+            ❤️
+        </div>
+
+    </div>
+
+    <div class="tap">
+        💌 Tap the envelope
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PHOTO
+========================= -->
+
+<section class="screen hidden" id="photoScreen">
+
+    <div class="photo-frame">
+
+        <!--
+        OPTIONAL:
+        Put your photo in the same folder
+        and name it "winnie-photo.jpg"
+        -->
+
+        <img
+            src="winnie-photo.jpg"
+            alt="A beautiful memory">
+
+    </div>
+
+    <div class="photo-caption">
+        One beautiful memory...
+        ❤️
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FINAL
+========================= -->
+
+<section class="screen hidden" id="final">
+
+    <div class="big-heart">
+        ❤️
+    </div>
+
+    <h1 class="final-title">
+        I Love You, Winnie
+    </h1>
+
+    <div class="final-text">
+
+        May every dream in your heart
+        find its way to you.
+
+        <br><br>
+
+        May you always have the courage
+        to chase your dreams,
+        the strength to overcome every
+        difficult day,
+        and the happiness you deserve.
+
+        <br><br>
+
+        I will always wish for beautiful
+        things to find you.
+
+        <br><br>
+
+        <strong>
+        I love you, sayang. ❤️
+        </strong>
+
+        <br><br>
+
+        Forever & Always 🌹
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const intro =
+    document.getElementById("intro");
+
+const envelopeScreen =
+    document.getElementById("envelopeScreen");
+
+const photoScreen =
+    document.getElementById("photoScreen");
+
+const final =
+    document.getElementById("final");
+
+const start =
+    document.getElementById("start");
+
+const envelope =
+    document.getElementById("envelope");
+
+const typed =
+    document.getElementById("typed");
+
+const music =
+    document.getElementById("music");
+
+const musicBtn =
+    document.getElementById("musicBtn");
+
+
+/* =========================
+   CREATE STARS
+========================= */
+
+for(let i=0;i<100;i++){
+
+    const star =
+        document.createElement("div");
+
+    star.className="star";
+
+    star.style.left =
+        Math.random()*100+"vw";
+
+    star.style.top =
+        Math.random()*100+"vh";
+
+    star.style.animationDelay =
+        Math.random()*3+"s";
+
+    document.body.appendChild(star);
+}
+
+
+/* =========================
+   START STORY
+========================= */
+
+start.onclick=()=>{
+
+    intro.classList.add("hidden");
+
+    envelopeScreen.classList.remove("hidden");
+
+    music.volume=.35;
+
+    music.play().catch(()=>{});
+
+    heartsBurst();
+
+};
+
+
+/* =========================
+   OPEN ENVELOPE
+========================= */
+
+let opened=false;
+
+envelope.onclick=()=>{
+
+    if(opened)return;
+
+    opened=true;
+
+    envelope.classList.add("open");
+
+    petalsBurst();
+
+    setTimeout(
+
+        typeLetter,
+
+        1600
+
+    );
+};
+
+
+/* =========================
+   LOVE LETTER
+========================= */
+
+const message =
+`I love you, sayang. ❤️
+
+I'm wishing you success in everything you do
+and every dream you chase.
+
+May life always open beautiful doors
+for you.
+
+May you always have the strength,
+courage and happiness to walk through them.
+
+No matter how busy or difficult life gets,
+please remember that you are precious,
+loved and deserving of beautiful things.
+
+Keep shining.
+Keep smiling.
+And keep being the amazing Winnie that you are. 🌷
+
+May your life be filled with happiness,
+peace, success and endless blessings.
+
+I love you, sayang. ❤️`;
+
+
+/* =========================
+   TYPING
+========================= */
+
+function typeLetter(){
+
+    let i=0;
+
+    function type(){
+
+        if(i<message.length){
+
+            typed.innerHTML +=
+                message[i]==="\n"
+                ? "<br>"
+                : message[i];
+
+            i++;
+
+            setTimeout(type,32);
+
+        }else{
+
+            setTimeout(
+                showPhoto,
+                2500
+            );
+
+        }
+
+    }
+
+    type();
+}
+
+
+/* =========================
+   PHOTO
+========================= */
+
+function showPhoto(){
+
+    envelopeScreen.classList.add("hidden");
+
+    photoScreen.classList.remove("hidden");
+
+    setTimeout(()=>{
+
+        photoScreen.classList.add("show");
+
+    },100);
+
+    heartsBurst();
+
+    petalsBurst();
+
+    setTimeout(
+        showFinal,
+        5000
+    );
+}
+
+
+/* =========================
+   FINAL
+========================= */
+
+function showFinal(){
+
+    photoScreen.classList.add("hidden");
+
+    final.classList.remove("hidden");
+
+    heartsBurst();
+
+    petalsBurst();
+
+    sparkleBurst();
+
+}
+
+
+/* =========================
+   HEARTS
+========================= */
+
+function createHeart(){
+
+    const h =
+        document.createElement("div");
+
+    h.className="heart";
+
+    h.innerHTML =
+        ["❤️","💕","💗","💖","💓"][
+            Math.floor(Math.random()*5)
+        ];
+
+    h.style.left =
+        Math.random()*100+"vw";
+
+    h.style.fontSize =
+        (15+Math.random()*30)+"px";
+
+    h.style.animationDuration =
+        (4+Math.random()*5)+"s";
+
+    document.body.appendChild(h);
+
+    setTimeout(
+        ()=>h.remove(),
+        10000
+    );
+}
+
+function heartsBurst(){
+
+    for(let i=0;i<30;i++){
+
+        setTimeout(
+            createHeart,
+            i*70
+        );
+
+    }
+}
+
+
+/* =========================
+   PETALS
+========================= */
+
+function createPetal(){
+
+    const p =
+        document.createElement("div");
+
+    p.className="petal";
+
+    p.innerHTML =
+        ["🌹","🌸","🌷","🌺","💗"][
+            Math.floor(Math.random()*5)
+        ];
+
+    p.style.left =
+        Math.random()*100+"vw";
+
+    p.style.fontSize =
+        (12+Math.random()*22)+"px";
+
+    p.style.animationDuration =
+        (5+Math.random()*7)+"s";
+
+    document.body.appendChild(p);
+
+    setTimeout(
+        ()=>p.remove(),
+        13000
+    );
+}
+
+function petalsBurst(){
+
+    for(let i=0;i<25;i++){
+
+        setTimeout(
+            createPetal,
+            i*100
+        );
+
+    }
+}
+
+
+/* =========================
+   SPARKLES
+========================= */
+
+function createSpark(){
+
+    const s =
+        document.createElement("div");
+
+    s.className="spark";
+
+    s.innerHTML="✨";
+
+    s.style.left =
+        Math.random()*100+"vw";
+
+    s.style.top =
+        Math.random()*100+"vh";
+
+    s.style.fontSize =
+        (15+Math.random()*25)+"px";
+
+    document.body.appendChild(s);
+
+    setTimeout(
+        ()=>s.remove(),
+        1600
+    );
+}
+
+function sparkleBurst(){
+
+    for(let i=0;i<50;i++){
+
+        setTimeout(
+            createSpark,
+            i*50
+        );
+
+    }
+}
+
+
+/* =========================
+   CONTINUOUS EFFECTS
+========================= */
+
+setInterval(
+    createPetal,
+    700
+);
+
+setInterval(
+    createHeart,
+    1800
+);
+
+
+/* =========================
+   MUSIC BUTTON
+========================= */
+
+let playing=false;
+
+musicBtn.onclick=(e)=>{
+
+    e.stopPropagation();
+
+    if(playing){
+
+        music.pause();
+
+        playing=false;
+
+        musicBtn.innerHTML="🔇";
+
+    }else{
+
+        music.play().catch(()=>{});
+
+        playing=true;
+
+        musicBtn.innerHTML="🎵";
+    }
+};
+
+</script>
+
+</body>
+</html>Winnie-Love/
+│
+├── winnie-forever.html
+├── love-song.mp3
+└── winnie-photo.jpg
