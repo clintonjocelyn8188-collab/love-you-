@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Winnie ❤️</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+  background: radial-gradient(circle at bottom, #35001c, #050008 75%);
+  font-family: Georgia, serif;
+  color: white;
+}
+
+canvas {
+  position: fixed;
+  inset: 0;
+}
+
+#startScreen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #35001c, #050008);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  text-align: center;
+}
+
+.openHeart {
+  padding: 18px 35px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(45deg,#ff2778,#ff75a9);
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 0 30px #ff2778;
+  cursor: pointer;
+  animation: heartbeat 1.3s infinite;
+}
+
+.message {
+  position: absolute;
+  top: 38%;
+  width: 100%;
+  text-align: center;
+  z-index: 5;
+}
+
+.small {
+  font-size: 18px;
+  letter-spacing: 4px;
+}
+
+.winnie {
+  font-size: clamp(38px,8vw,75px);
+  color: #ffd1e1;
+  text-shadow: 0 0 25px #ff4d8d;
+}
+
+.love {
+  font-size: clamp(70px,16vw,160px);
+  font-weight: bold;
+  color: #ff4d8d;
+  text-shadow:
+    0 0 10px #ff4d8d,
+    0 0 30px #ff1f75,
+    0 0 70px #ff0066;
+  animation: heartbeat 1.2s infinite;
+}
+
+.kiss {
+  font-size: 40px;
+  animation: float 2s infinite ease-in-out;
+}
+
+.flower {
+  position: absolute;
+  bottom: -50px;
+  font-size: 35px;
+  animation: rise linear infinite;
+  z-index: 3;
+}
+
+@keyframes heartbeat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes float {
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  20% { opacity: 1; }
+  to {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- START BUTTON -->
+<div id="startScreen">
+  <div>
+    <div style="font-size:45px;margin-bottom:20px;">💌</div>
+
+    <div style="font-size:24px;margin-bottom:25px;">
+      Winnie... I made something<br>
+      just for you ❤️
+    </div>
+
+    <button class="openHeart" onclick="openHeart()">
+      Open My Heart ❤️
+    </button>
+  </div>
+</div>
+
+<canvas id="fireworks"></canvas>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="romantic.mp3" type="audio/mpeg">
+</audio>
+
+<!-- KISS SOUND -->
+<audio id="kissSound">
+  <source src="kiss.mp3" type="audio/mpeg">
+</audio>
+
+<div class="message">
+
+  <div class="small">
+    FOR MY BEAUTIFUL
+  </div>
+
+  <div class="winnie">
+    WINNIE ❤️
+  </div>
+
+  <div class="love">
+    LOVE
+  </div>
+
+  <div class="kiss">
+    💋 💋 💋
+  </div>
+
+  <div style="font-size:18px;margin:15px 25px;">
+    You are my favourite person,
+    my beautiful love,
+    and the one I want beside me
+    through every chapter of life. ❤️
+  </div>
+
+  <div style="font-size:18px;">
+    I love you more than words can say. 💕
+  </div>
+
+  <div style="font-size:18px;margin-top:12px;">
+    Forever yours… 💍❤️
+  </div>
+
+</div>
+
+<script>
+
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let particles = [];
+
+function firework(x,y){
+
+  for(let i=0;i<100;i++){
+
+    const angle = Math.random()*Math.PI*2;
+    const speed = Math.random()*6+2;
+
+    particles.push({
+      x:x,
+      y:y,
+      vx:Math.cos(angle)*speed,
+      vy:Math.sin(angle)*speed,
+      life:100,
+      size:Math.random()*2+1,
+      hue:Math.random()*360
+    });
+
+  }
+}
+
+function animate(){
+
+  ctx.fillStyle="rgba(5,0,8,0.18)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach((p,i)=>{
+
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += 0.04;
+    p.life--;
+
+    ctx.beginPath();
+
+    ctx.fillStyle=
+      `hsla(${p.hue},100%,70%,${p.life/100})`;
+
+    ctx.arc(
+      p.x,
+      p.y,
+      p.size,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    if(p.life<=0)
+      particles.splice(i,1);
+
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+setInterval(()=>{
+
+  firework(
+    Math.random()*canvas.width,
+    Math.random()*canvas.height*0.45
+  );
+
+},900);
+
+
+/* OPEN HEART */
+
+function openHeart(){
+
+  const screen =
+    document.getElementById("startScreen");
+
+  screen.style.display="none";
+
+  const music =
+    document.getElementById("music");
+
+  music.volume=0.45;
+
+  music.play().catch(()=>{});
+
+  setTimeout(()=>{
+
+    const kiss =
+      document.getElementById("kissSound");
+
+    kiss.volume=0.7;
+
+    kiss.play().catch(()=>{});
+
+  },2500);
+
+}
+
+
+/* FLOWERS */
+
+const flowers =
+["🌹","🌸","🌷","🌺","💐","❤️","💖"];
+
+for(let i=0;i<30;i++){
+
+  const flower =
+    document.createElement("div");
+
+  flower.className="flower";
+
+  flower.innerText=
+    flowers[
+      Math.floor(Math.random()*flowers.length)
+    ];
+
+  flower.style.left=
+    Math.random()*100+"%";
+
+  flower.style.animationDuration=
+    (5+Math.random()*7)+"s";
+
+  flower.style.animationDelay=
+    Math.random()*6+"s";
+
+  document.body.appendChild(flower);
+}
+
+
+/* RESIZE */
+
+window.addEventListener("resize",()=>{
+
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
+
+});
+
+</script>
+
+</body>
+</html>winnie-love/
+│
+├── winnie.html
+├── romantic.mp3
+└── kiss.mp3
